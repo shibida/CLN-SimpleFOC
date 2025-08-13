@@ -49,12 +49,15 @@ void onMotor(char* cmd){ commander.motor(&motor,cmd); }
 
 void initMotorParameters()
 {
-    // control mode
+    // Torque control type ("foc_current" is the most advanced one, so it's better not to change it)
     motor.torque_controller = TorqueControlType::foc_current;
-    motor.controller = MotionControlType::angle;
-    // motor.controller = MotionControlType::velocity_openloop;
 
-    // current
+    // Control mode (uncomment the one you need)
+    motor.controller = MotionControlType::angle;
+    // motor.controller = MotionControlType::velocity;
+    // motor.controller = MotionControlType::torque;
+
+    // Current control: PID, LPF, limits
     motor.PID_current_q.P =     3.0f;
     motor.PID_current_q.I =     100.0f;
     motor.PID_current_d.P =     3.0f;
@@ -64,14 +67,14 @@ void initMotorParameters()
 
     motor.current_limit =       1.5f;
 
-    // velocity
+    // Velocity control: PID, LPF, limits
     motor.PID_velocity.P =      0.5f;
     motor.PID_velocity.I =      10.0f;
     motor.PID_velocity.D =      0.0f;
     motor.LPF_velocity.Tf =     0.05f;
     motor.velocity_limit =      20.0f;
 
-    // position
+    // Position control: PID
     motor.P_angle.P =           10.0f;
     motor.P_angle.D =           0.01f;
 }
